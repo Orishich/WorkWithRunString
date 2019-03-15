@@ -1,10 +1,17 @@
 package ua.com.qalight.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+
 
 import ua.com.qalight.entity.CurrencyEntity;
+import ua.com.qalight.entity.Currency;
 
 public class FileManager {
 
@@ -22,11 +29,19 @@ public class FileManager {
 			System.getProperty("file.separator") + 
 			"outputFile.txt";
 
-	private static String currencyMap;	
-	
-	public static Map<String, Double> readInputCurrencyValues(){
 		
-		return null;
+	public static Map<String, Double> readInputCurrencyValues(){
+		HashMap<String, Double> inputCodeNbu = new HashMap<>();
+		try (Scanner fileScanner = new Scanner (new File (INPUT_FILE_PATH))) {
+			while (fileScanner.hasNextLine()) {
+				String[] codeNbu = fileScanner.nextLine().split(";");
+				inputCodeNbu.put(codeNbu[0], Double.parseDouble(codeNbu[1]));
+			}
+		}
+			catch (FileNotFoundException e) {
+			}
+					
+		return inputCodeNbu;
 	}
 	
 
@@ -35,7 +50,7 @@ public class FileManager {
 		// call calculted methods
 		try {
 			FileWriter fileWriter = new FileWriter(OUTPUT_FILE_PATH);{
-			fileWriter.write(currency.toString() + currencyMap);
+//			fileWriter.write(simbol.Currency  ) .toString() + "\n");
 			fileWriter.flush();
 			}
 		} catch (IOException e) {
