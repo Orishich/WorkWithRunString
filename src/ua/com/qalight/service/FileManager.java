@@ -34,9 +34,10 @@ public class FileManager {
 		HashMap<String, Double> inputCodeNbu = new HashMap<>();
 		try (Scanner fileScanner = new Scanner (new File (INPUT_FILE_PATH))) {
 			while (fileScanner.hasNextLine()) {
-				String[] codeNbu = fileScanner.nextLine().split(";");
+				String[] codeNbu = fileScanner.nextLine().split(", ");
 				inputCodeNbu.put(codeNbu[0], Double.parseDouble(codeNbu[1]));
 			}
+			fileScanner.close();
 		}
 			catch (FileNotFoundException e) {
 			}
