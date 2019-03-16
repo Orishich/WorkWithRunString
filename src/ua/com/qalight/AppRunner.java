@@ -21,7 +21,7 @@ public class AppRunner {
 			List<CurrencyEntity> currencyEntities = CurrencyMapper.getFromMap(currencyMap);
 			
 			for (CurrencyEntity currencyEntity : currencyEntities) {
-				FileManager.writeCurrencyValuesToFile(currencyEntity);
+				FileManager.writeCurrencyValuesToFile(currencyEntity, currencyMap);
 			}
 			
 			try {

@@ -1,5 +1,7 @@
 package ua.com.qalight.entity;
 
+import ua.com.qalight.service.CalculationService;
+
 public class CurrencyEntity {
 
 	private Currency currency;
@@ -28,5 +30,15 @@ public class CurrencyEntity {
 
 	public CurrencyEntity() {
 	}
+	
 
+	@Override
+	public String toString() {
+		return currency.getShortName() + "(" + currency.getSymbol() 
+		+ ")" + "-" + CalculationService.getSellPrice(currencyEntity) + " - " + CalculationService.getBuyPrice(currencyEntity) + "\n";
+
+				
+//				currency + "-" + value;
+	}
+	
 }

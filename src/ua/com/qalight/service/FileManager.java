@@ -9,9 +9,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-
 import ua.com.qalight.entity.CurrencyEntity;
 import ua.com.qalight.entity.Currency;
+import ua.com.qalight.util.CurrencyMapper;
+
 
 public class FileManager {
 
@@ -46,17 +47,12 @@ public class FileManager {
 	}
 	
 
-	public static void writeCurrencyValuesToFile(CurrencyEntity currency) {
-		
-		// call calculted methods
-		try {
-			FileWriter fileWriter = new FileWriter(OUTPUT_FILE_PATH);{
-//			fileWriter.write(simbol.Currency  ) .toString() + "\n");
-			fileWriter.flush();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+	public static void writeCurrencyValuesToFile(CurrencyEntity currency, Map<String, Double> currencyMap) {
+
+		try (FileWriter fileWriter = new FileWriter(OUTPUT_FILE_PATH)){
+				fileWriter.write(currency.toString() + currencyMap + "\n");
+				fileWriter.flush();
+			}catch (Exception e) {
 		}
 	}
-	
 }
