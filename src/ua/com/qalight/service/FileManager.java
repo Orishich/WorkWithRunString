@@ -2,16 +2,14 @@ package ua.com.qalight.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import ua.com.qalight.entity.CurrencyEntity;
-import ua.com.qalight.entity.Currency;
-import ua.com.qalight.util.CurrencyMapper;
 
 
 public class FileManager {
@@ -47,12 +45,18 @@ public class FileManager {
 	}
 	
 
-	public static void writeCurrencyValuesToFile(CurrencyEntity currency, Map<String, Double> currencyMap) {
-
-		try (FileWriter fileWriter = new FileWriter(OUTPUT_FILE_PATH)){
-				fileWriter.write(currency.toString() + currencyMap + "\n");
-				fileWriter.flush();
-			}catch (Exception e) {
+	public static void writeCurrencyValuesToFile(List<CurrencyEntity> currencies) {
+		try (FileWriter writer = new FileWriter(OUTPUT_FILE_PATH, false)) {
+			String outText = "";
+			for (CurrencyEntity currencyEntity : currencies) {
+				outText += currencyEntity.getCurrency().getShortName() + "(" + currencyEntity.getCurrency().getSymbol()
+						+ ")" + " - " + CalculationService.getBuyPrice(currencyEntity) + "/"
+						+ CalculationService.getSellPrice(currencyEntity) + " - " + currencyEntity.getValue() + "\n";
+			}
+			writer.write(outText);
+			writer.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
